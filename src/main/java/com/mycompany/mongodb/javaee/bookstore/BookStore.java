@@ -92,4 +92,22 @@ public class BookStore {
         bookList = query();
     }
 
+    public Book checkAvailability(Book book) {
+        Gson gson = new Gson();
+        DB db = mongoClient.getDB("bookstore-db");
+        DBCollection collection = db.getCollection("books");
+
+        BasicDBObject query = new BasicDBObject("title", book.getTitle());
+        query.append("author", book.getAuthor());
+
+        DBObject object = collection.findOne(query);
+
+        if (object == null) {
+            return null;
+        }
+
+        return gson.fromJson(object.toString(), Book.class);
+
+    }
+
 }

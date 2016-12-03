@@ -10,7 +10,9 @@ import com.mycompany.mongodb.javaee.bookstore.bean.Book;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookFactory {
+public final class BookFactory {
+
+    private BookFactory () {}
 
     public static List<Book> getBooksToAdd() {
         List<Book> books = new ArrayList<>();

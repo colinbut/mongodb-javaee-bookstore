@@ -6,7 +6,7 @@
 package com.mycompany.mongodb.javaee.bookstore.producer;
 
 import com.mongodb.MongoClient;
-import com.mycompany.mongodb.javaee.bookstore.MongoDBConnectionProperties;
+import com.mycompany.mongodb.javaee.bookstore.db.MongoDBConnectionProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

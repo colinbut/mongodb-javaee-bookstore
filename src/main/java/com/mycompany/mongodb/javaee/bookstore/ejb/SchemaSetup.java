@@ -6,13 +6,12 @@
 package com.mycompany.mongodb.javaee.bookstore.ejb;
 
 import com.google.gson.Gson;
-import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
 import com.mongodb.util.JSON;
 import com.mycompany.mongodb.javaee.bookstore.bean.Book;
 import com.mycompany.mongodb.javaee.bookstore.db.MongoDBManager;
+import com.mycompany.mongodb.javaee.bookstore.factory.BookFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +19,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 
 @Singleton
 @Startup
@@ -42,7 +39,7 @@ public class SchemaSetup {
 
             Gson gson = new Gson();
 
-            for (Book book : getBooksToAdd()) {
+            for (Book book : BookFactory.getBooksToAdd()) {
                 DBObject object = (DBObject) JSON.parse(gson.toJson(book));
                 collection.insert(object);
             }
@@ -50,16 +47,6 @@ public class SchemaSetup {
         } catch (Exception ex) {
             LOGGER.error("{}", ex);
         }
-    }
-
-    private static List<Book> getBooksToAdd() {
-        List<Book> books = new ArrayList<>();
-        books.add(new Book(10, "Novel", "Charles Dickens", "A Tale of Two Cities", 10));
-        books.add(new Book(12, "Thriller", "Dan Brown", "The Da Vinci Code", 10));
-        books.add(new Book(10, "Motivation", "Napoleon Hill", "Think and Grow Rich", 10));
-        books.add(new Book(8, "Fantasy", "J.R.R. Tolkien", "The Hobbit", 10));
-        books.add(new Book(8, "Novel", "Antoine de Saint-Exupery", "Le Petit Prince", 10));
-        return books;
     }
 
 }

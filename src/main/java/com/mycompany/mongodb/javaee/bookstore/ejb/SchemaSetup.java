@@ -12,6 +12,7 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.util.JSON;
 import com.mycompany.mongodb.javaee.bookstore.bean.Book;
+import com.mycompany.mongodb.javaee.bookstore.db.MongoDBManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,16 +30,15 @@ public class SchemaSetup {
     private static final Logger LOGGER = LoggerFactory.getLogger(SchemaSetup.class);
 
     @Inject
-    private MongoClient mongoClient;
+    private MongoDBManager mongoDBManager;
 
     @PostConstruct
     public void setupData() {
         try {
-            DB db = mongoClient.getDB("bookstore");
 
-            DBCollection collection = db.getCollection("books");
+            DBCollection collection = mongoDBManager.getCollection("books");
             collection.drop();
-            collection = db.getCollection("books");
+            collection = mongoDBManager.getCollection("books");
 
             Gson gson = new Gson();
 

@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/bookstore")
-public class BookService {
+public class BookService extends AbstractRESTWebService {
 
     @Inject
     private BookStore bookStore;
@@ -36,14 +36,14 @@ public class BookService {
         Book book = bookStore.checkAvailability(bookToBuy);
 
         if (book == null) {
-            return Response.ok("Book not found sorry!").build();
+            return sendResponse("Book not found sorry!");
         }
 
         if (book.getCopies() > 0 ) {
             bookStore.buy(book);
-            return Response.ok("Book purchased!").build();
+            return sendResponse("Book purchased!");
         } else {
-            return Response.ok("No more copies available sorry!").build();
+            return sendResponse("No more copies available sorry!");
         }
 
     }

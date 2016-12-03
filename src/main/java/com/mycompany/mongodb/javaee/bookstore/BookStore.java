@@ -7,13 +7,12 @@ package com.mycompany.mongodb.javaee.bookstore;
 
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.MongoClient;
 import com.mongodb.util.JSON;
 import com.mycompany.mongodb.javaee.bookstore.bean.Book;
+import com.mycompany.mongodb.javaee.bookstore.db.MongoDBManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +29,7 @@ public class BookStore {
     private static final Logger LOGGER = LoggerFactory.getLogger(BookStore.class);
 
     @Inject
-    MongoClient mongoClient;
+    private MongoDBManager mongoDBManager;
 
     List<Book> bookList;
 
@@ -48,8 +47,7 @@ public class BookStore {
     public List<Book> query() {
         Gson gson = new Gson();
 
-        DB db = mongoClient.getDB("bookstore-db");
-        DBCollection collection = db.getCollection("books");
+        DBCollection collection = mongoDBManager.getCollection("books");
         DBCursor cursor = null;
 
         if (filter == null || filter.trim().length() == 0) {
@@ -79,9 +77,8 @@ public class BookStore {
         Gson gson = new Gson();
 
         int copiesLeft = book.getCopies() - 1;
-        DB db = mongoClient.getDB("bookstore-db");
 
-        DBCollection collection = db.getCollection("books");
+        DBCollection collection = mongoDBManager.getCollection("books");
 
         BasicDBObject newDocument = new BasicDBObject();
         newDocument.append("$set", new BasicDBObject().append("copies", copiesLeft));
@@ -94,8 +91,8 @@ public class BookStore {
 
     public Book checkAvailability(Book book) {
         Gson gson = new Gson();
-        DB db = mongoClient.getDB("bookstore-db");
-        DBCollection collection = db.getCollection("books");
+
+        DBCollection collection = mongoDBManager.getCollection("books");
 
         BasicDBObject query = new BasicDBObject("title", book.getTitle());
         query.append("author", book.getAuthor());

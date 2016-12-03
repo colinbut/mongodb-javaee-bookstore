@@ -6,6 +6,7 @@
 package com.mycompany.mongodb.javaee.bookstore.producer;
 
 import com.mongodb.MongoClient;
+import com.mycompany.mongodb.javaee.bookstore.MongoDBConnectionProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +22,8 @@ public class Producer {
     @Produces
     public MongoClient mongoClient() {
         try {
-            return new MongoClient("localhost", 27017);
+            return new MongoClient(MongoDBConnectionProperties.CONNECTION_URL,
+                MongoDBConnectionProperties.CONNECTION_PORT);
         } catch (UnknownHostException e) {
             LOGGER.error("{}", e);
         }

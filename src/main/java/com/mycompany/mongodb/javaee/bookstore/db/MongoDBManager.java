@@ -23,7 +23,7 @@ public class MongoDBManager {
     }
 
     private DB getDB() {
-        return mongoClient.getDB("bookstore");
+        return mongoClient.getDB(BookStoreMongoDBConstants.DATABASE_NAME);
     }
 
     public DBCollection getCollection(String collectionName) {

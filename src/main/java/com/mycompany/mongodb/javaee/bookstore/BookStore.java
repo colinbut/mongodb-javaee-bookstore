@@ -12,6 +12,7 @@ import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import com.mycompany.mongodb.javaee.bookstore.bean.Book;
+import com.mycompany.mongodb.javaee.bookstore.db.BookStoreMongoDBConstants;
 import com.mycompany.mongodb.javaee.bookstore.db.MongoDBManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,8 +48,8 @@ public class BookStore {
     public List<Book> query() {
         Gson gson = new Gson();
 
-        DBCollection collection = mongoDBManager.getCollection("books");
-        DBCursor cursor = null;
+        DBCollection collection = mongoDBManager.getCollection(BookStoreMongoDBConstants.COLLECTION_NAME);
+        DBCursor cursor;
 
         if (filter == null || filter.trim().length() == 0) {
             cursor = collection.find();
@@ -78,7 +79,7 @@ public class BookStore {
 
         int copiesLeft = book.getCopies() - 1;
 
-        DBCollection collection = mongoDBManager.getCollection("books");
+        DBCollection collection = mongoDBManager.getCollection(BookStoreMongoDBConstants.COLLECTION_NAME);
 
         BasicDBObject newDocument = new BasicDBObject();
         newDocument.append("$set", new BasicDBObject().append("copies", copiesLeft));
@@ -92,7 +93,7 @@ public class BookStore {
     public Book checkAvailability(Book book) {
         Gson gson = new Gson();
 
-        DBCollection collection = mongoDBManager.getCollection("books");
+        DBCollection collection = mongoDBManager.getCollection(BookStoreMongoDBConstants.COLLECTION_NAME);
 
         BasicDBObject query = new BasicDBObject("title", book.getTitle());
         query.append("author", book.getAuthor());

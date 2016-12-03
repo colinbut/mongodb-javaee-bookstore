@@ -10,6 +10,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import com.mycompany.mongodb.javaee.bookstore.bean.Book;
+import com.mycompany.mongodb.javaee.bookstore.db.BookStoreMongoDBConstants;
 import com.mycompany.mongodb.javaee.bookstore.db.MongoDBManager;
 import com.mycompany.mongodb.javaee.bookstore.factory.BookFactory;
 import org.slf4j.Logger;
@@ -33,9 +34,9 @@ public class SchemaSetup {
     public void setupData() {
         try {
 
-            DBCollection collection = mongoDBManager.getCollection("books");
+            DBCollection collection = mongoDBManager.getCollection(BookStoreMongoDBConstants.COLLECTION_NAME);
             collection.drop();
-            collection = mongoDBManager.getCollection("books");
+            collection = mongoDBManager.getCollection(BookStoreMongoDBConstants.COLLECTION_NAME);
 
             Gson gson = new Gson();
 

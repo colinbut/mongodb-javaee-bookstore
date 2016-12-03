@@ -7,11 +7,11 @@ package com.mycompany.mongodb.javaee.bookstore.bean;
 
 public class Book {
 
-    String title;
-    String author;
-    String type;
-    double price;
-    int copies;
+    private String title;
+    private String author;
+    private String type;
+    private double price;
+    private int copies;
 
     public Book() {}
 

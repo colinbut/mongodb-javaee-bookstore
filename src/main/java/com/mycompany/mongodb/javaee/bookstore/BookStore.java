@@ -31,9 +31,9 @@ public class BookStore {
     @Inject
     private MongoDBManager mongoDBManager;
 
-    List<Book> bookList;
+    private List<Book> bookList;
 
-    String filter;
+    private String filter;
 
     @PostConstruct
     private void init() {

@@ -15,13 +15,13 @@ public class Book {
 
     public Book() {}
 
-    public Book(double price, String type, String author, String title) {
+    public Book(double price, String type, String author, String title, int copies) {
         super();
         this.price = price;
         this.type = type;
         this.author = author;
         this.title = title;
-        this.copies = 10;
+        this.copies = copies;
     }
 
     public String getTitle() {
